@@ -1,6 +1,6 @@
 import express from "express";
-import mongoose from "mongoose";
-import Transaction from "./models/transaction.js";
+import connect from "./database/mongodb.js";
+import TransactionsApi from "./routes/TransactionsApi.js";
 // import bodyParser from "body-parser";
 import cors from "cors";
 const PORT = 4000;
@@ -10,31 +10,15 @@ app.use(cors());
 app.use(express.json());
 // app.use(bodyParser.json());
 
-// mongodb connect
-await mongoose.connect(
-  "mongodb+srv://expenseMern:PECB9FCKfb7KgLwO@asad-mern.mktk1b5.mongodb.net/?retryWrites=true&w=majority"
-);
-console.log("mongoDb connection is successful ");
-
 app.get("/", (req, res) => {
   res.send("hello world");
 });
 
-app.get("/transaction", async (req, res) => {
-  const transaction = await Transaction.find({}).sort({ createdAt: -1 });
-  res.json({ data: transaction });
-});
+// transaction api
+app.use("/transaction", TransactionsApi);
 
-app.post("/transaction", async (req, res) => {
-  const { amount, description, date } = req.body;
-  const transaction = new Transaction({
-    amount,
-    description,
-    date,
-  });
-  await transaction.save();
-  res.json({ message: "success" });
-});
+// database connect
+await connect();
 
 app.listen(PORT, () => {
   console.log(`server is running ${PORT}`);

@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
+import Button from "@mui/material/Button";
+import AppBar from "./components/AppBar";
+import TransactionForm from "./components/TransactionForm";
+// import { AppBar } from "@mui/material";
 
 function App() {
-  const [form, setForm] = useState({
+  const initialForm = {
     amount: 0,
     description: "",
     date: "",
-  });
+  };
+  const [form, setForm] = useState(initialForm);
 
   const [transaction, setTransaction] = useState([]);
 
@@ -32,6 +37,7 @@ function App() {
     });
 
     if (res.ok) {
+      setForm(initialForm);
       fetchTransaction();
     }
   };
@@ -41,6 +47,9 @@ function App() {
   };
   return (
     <div>
+      <AppBar></AppBar>
+
+      <TransactionForm></TransactionForm>
       <form onSubmit={handleSubmit}>
         <input
           type="number"
