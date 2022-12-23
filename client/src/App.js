@@ -7,15 +7,20 @@ function App() {
     date: "",
   });
 
+  // console.log(form);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const res = await fetch("http://localhost:4000/transaction", {
       method: "POST",
-      body: form,
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(form),
     });
 
-    console.log(res);
+    const data = res.json();
+    console.log(data);
   };
 
   const handelInput = (e) => {
