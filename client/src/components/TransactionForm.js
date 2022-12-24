@@ -8,6 +8,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import Button from "@mui/material/Button";
 import { Container } from "@mui/system";
+import { toast } from "react-toastify";
 
 export default function TransactionForm({ fetchTransaction, editTransaction }) {
   const initialForm = {
@@ -36,6 +37,7 @@ export default function TransactionForm({ fetchTransaction, editTransaction }) {
     e.preventDefault();
 
     const res = editTransaction.amount === undefined ? create() : update();
+    console.log(res);
   };
 
   function reload(res) {
@@ -53,6 +55,7 @@ export default function TransactionForm({ fetchTransaction, editTransaction }) {
       },
       body: JSON.stringify(form),
     });
+
     reload(res);
   }
   async function update() {
@@ -66,6 +69,9 @@ export default function TransactionForm({ fetchTransaction, editTransaction }) {
         body: JSON.stringify(form),
       }
     );
+    if (res.ok) {
+      toast.success("update successfully", { autoClose: 800 });
+    }
     reload(res);
   }
 
