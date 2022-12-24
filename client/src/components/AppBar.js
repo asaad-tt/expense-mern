@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
+import { red } from "@mui/material/colors";
 
 export default function ButtonAppBar() {
   return (
@@ -23,10 +24,15 @@ export default function ButtonAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            MoneyEx
+            <Link to="/" className="text-white">
+              MoneyEx
+            </Link>
           </Typography>
-          <Link to="/login">
+          <Link to="/login" className="text-white">
             <Button color="inherit">Login</Button>
+          </Link>
+          <Link to="/register" className="text-white">
+            <Button color="inherit">Register</Button>
           </Link>
         </Toolbar>
       </AppBar>
