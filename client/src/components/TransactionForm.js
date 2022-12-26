@@ -48,7 +48,7 @@ export default function TransactionForm({ fetchTransaction, editTransaction }) {
   }
 
   async function create() {
-    const res = await fetch("http://localhost:4000/transaction", {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/transaction`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

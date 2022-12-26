@@ -1,8 +1,11 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Main from "../Layout/Main";
 import Home from "../Pages/Home";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
+
+import CheckAuth from "../utils/CheckAuth";
+import Guest from "../utils/Guest";
 
 const router = createBrowserRouter([
   {
@@ -11,11 +14,24 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home></Home>,
+        element: (
+          <CheckAuth>
+            <Home></Home>
+          </CheckAuth>
+        ),
+        // element: token ? (
+        //   <Home></Home>
+        // ) : (
+        //   <Navigate to="/login" replace={true} />
+        // ),
       },
       {
         path: "/login",
-        element: <Login></Login>,
+        element: (
+          <Guest>
+            <Login></Login>
+          </Guest>
+        ),
       },
       {
         path: "/register",
