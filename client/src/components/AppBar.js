@@ -10,12 +10,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { red } from "@mui/material/colors";
 import Cookies from "js-cookie";
 
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../store/auth";
+
 export default function ButtonAppBar() {
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const navigate = useNavigate();
-  const logout = () => {
+
+  function _logout() {
     Cookies.remove("token");
+    dispatch(logout());
     navigate("/login");
-  };
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -35,7 +42,7 @@ export default function ButtonAppBar() {
               MoneyEx
             </Link>
           </Typography>
-          <Button color="inherit" onClick={logout}>
+          <Button color="inherit" onClick={_logout}>
             Logout
           </Button>
           <Link to="/login" className="text-white">
